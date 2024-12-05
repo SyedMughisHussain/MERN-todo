@@ -1,12 +1,31 @@
-import express from 'express';
+import express from "express";
+import "dotenv/config";
 
-const app = express()
-const port = 3000
+import connectDb from "./config/connectDb.js";
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+import userRoutes from "./routes/user.routes.js";
+import categoryRoutes from "./routes/category.routes.js";
+import todoRoutes from "./routes/todo.routes.js";
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+const app = express();
+const port = process.env.PORT;
+
+app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
+app.use("/api/v1/user/", userRoutes);
+app.use("/api/v1/category/", categoryRoutes);
+app.use("/api/v1/todo/", todoRoutes);
+
+connectDb()
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Example app listening on port ${port}`);
+    });
+  })
+  .catch((err) => {
+    console.log("Error" + err);
+  });
