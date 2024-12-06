@@ -93,4 +93,18 @@ const signin = async (req, res) => {
   }
 };
 
-export { signup, signin };
+const getLoggedInUser = (req, res) => {
+  try {
+    const user = req.user;
+
+    res.json({
+      id: user._id,
+      fullName: user.fullName,
+      email: user.email,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server error while fetching user" });
+  }
+};
+
+export { signup, signin, getLoggedInUser };
