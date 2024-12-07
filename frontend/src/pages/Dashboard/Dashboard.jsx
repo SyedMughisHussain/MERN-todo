@@ -16,10 +16,19 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import CircularProgress from "@mui/material/CircularProgress"; // Import CircularProgress
+import CircularProgress from "@mui/material/CircularProgress";
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
+import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
+import PriorityHighOutlinedIcon from '@mui/icons-material/PriorityHighOutlined';
+
+// Screens
+import Profile from "../Profile/Profile";
+import MyTasks from "../MyTasks/MyTasks"
+import TaskCategories from "../TaskCategories/TaskCategories";
+import VitalTasks from "../VitalTasks/VitalTasks";
 
 const drawerWidth = 240;
 
@@ -82,10 +91,11 @@ export default function Dashboard() {
   };
 
   const menuItems = [
-    { text: "Inbox", icon: <InboxIcon />, path: "/dashboard" },
-    { text: "Starred", icon: <MailIcon />, path: "/dashboard/starred" },
-    { text: "Send Email", icon: <MailIcon />, path: "/dashboard/send-email" },
-    { text: "Drafts", icon: <InboxIcon />, path: "/dashboard/drafts" },
+    { text: "My Tasks", icon: <AssignmentTurnedInOutlinedIcon />, path: "/dashboard" },
+    { text: "Vital Tasks", icon: <PriorityHighOutlinedIcon />, path: "/dashboard/vital-tasks" },
+    { text: "Task Categories", icon: <FormatListBulletedOutlinedIcon />, path: "/dashboard/task-categories" },
+    { text: "Profile", icon: <AccountCircleOutlinedIcon />, path: "/dashboard/profile" },
+    { text: "Logout", icon: <LogoutOutlinedIcon />, path: "/" },
   ];
 
   // Simulate loading effect
@@ -128,7 +138,7 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Dashboard
+            To-Do Guru
           </Typography>
         </Toolbar>
       </AppBar>
@@ -169,22 +179,20 @@ export default function Dashboard() {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        {/* Define the routes for your dashboard content */}
         <Routes>
           <Route
             path="/"
-            element={<Typography>Welcome to the Dashboard!</Typography>}
+            element={<MyTasks />}
           />
-          <Route path="inbox" element={<Typography>Inbox Page</Typography>} />
+          <Route path="vital-tasks" element={<VitalTasks /> } />
           <Route
-            path="starred"
-            element={<Typography>Starred Page</Typography>}
+            path="task-categories"
+            element={<TaskCategories />}
           />
           <Route
-            path="send-email"
-            element={<Typography>Send Email Page</Typography>}
+            path="profile"
+            element={<Profile />}
           />
-          <Route path="drafts" element={<Typography>Drafts Page</Typography>} />
           <Route path="*" element={<Typography>Page not found</Typography>} />
         </Routes>
       </Main>
