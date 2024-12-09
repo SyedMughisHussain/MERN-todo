@@ -33,7 +33,7 @@ export default function TaskCategories() {
   const [modalType, setModalType] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [categoryName, setCategoryName] = useState("");
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   const handleOpen = (type, category = null) => {
     setModalType(type);
@@ -50,9 +50,17 @@ export default function TaskCategories() {
 
   const handleCreate = () => {
     axios
-      .post("http://localhost:3000/api/v1/category/createCategory", {
-        name: categoryName,
-      })
+      .post(
+        "http://localhost:3000/api/v1/category/createCategory",
+        {
+          name: categoryName,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
       .then((response) => {
         setCategories([...categories, response.data.category]);
         console.log(response.data);
@@ -67,19 +75,28 @@ export default function TaskCategories() {
     handleClose();
   };
 
-  const handleDelete = () => {
-    axios.delete(`http://localhost:3000/api/v1/category/deleteCategory/6756eb5af655c179bbdeaefa`).then((response) => {
-      console.log(response.data);
-    }).catch((error) => {
-      console.log("Error: " + error.message);
-    });
+  const deleteTodo = (id) => {
+    axios
+      .delete(`http://localhost:3000/api/v1/category/deleteCategory/${id}`)
+      .then((response) => {
+        console.log(response.data);
+        setCategories(categories.filter((category) => category._id!== id));        
+      })
+      .catch((error) => {
+        console.log("Error: " + error.message);
+      });
   };
 
   useEffect(() => {
-    setLoading(true); 
+    const token = localStorage.getItem("token");
+    setLoading(true);
     setTimeout(() => {
       axios
-        .get("http://localhost:3000/api/v1/category/getCategories")
+        .get("http://localhost:3000/api/v1/category/getCategories", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((response) => {
           setCategories(response.data.categories);
           console.log(response.data.categories);
@@ -124,7 +141,13 @@ export default function TaskCategories() {
               <IconButton edge="end" onClick={() => handleOpen("edit", category)}>
                 <Edit />
               </IconButton>
-              <IconButton edge="end" color="error" onClick={() => handleOpen("delete", category)}>
+              <IconButton
+                edge="end"
+                color="error"
+                onClick={() => {
+                  deleteTodo(category._id);
+                }}
+              >
                 <Delete />
               </IconButton>
             </ListItemSecondaryAction>
@@ -151,20 +174,6 @@ export default function TaskCategories() {
               <Button variant="contained" color="primary" onClick={handleEdit} fullWidth>
                 Save Changes
               </Button>
-            </>
-          )}
-
-          {modalType === "delete" && (
-            <>
-              <Typography variant="h6">Are you sure you want to delete this category?</Typography>
-              <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
-                <Button variant="outlined" onClick={handleClose}>
-                  Cancel
-                </Button>
-                <Button variant="contained" color="error" onClick={handleDelete}>
-                  Delete
-                </Button>
-              </Box>
             </>
           )}
         </Box>
