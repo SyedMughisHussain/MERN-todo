@@ -1,6 +1,7 @@
 import Todo from "../models/todo.model.js";
 
 const createTodo = async (req, res) => {
+  const userId = req.user;
   const { title, description, status, priority, category } = req.body;
 
   try {
@@ -10,6 +11,7 @@ const createTodo = async (req, res) => {
       status,
       priority,
       category,
+      userId: userId,
     });
 
     res.status(201).json({
@@ -82,8 +84,9 @@ const deleteTodo = async (req, res) => {
 };
 
 const getTodos = async (req, res) => {
+  const { userId } = req.user;
   try {
-    const todos = await Todo.find();
+    const todos = await Todo.find({ userId });
 
     res.status(200).json({
       success: true,

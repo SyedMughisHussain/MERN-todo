@@ -93,9 +93,15 @@ const signin = async (req, res) => {
   }
 };
 
-const getLoggedInUser = (req, res) => {
+const getLoggedInUser = async (req, res) => {
   try {
-    const user = req.user;
+    const loggedInUser = req.user;
+    console.log(loggedInUser);
+  
+    if (!loggedInUser) {
+      return res.status(401).json({ message: "User not authenticated" });
+    }
+    const user = await User.findById(loggedInUser);
 
     res.json({
       id: user._id,

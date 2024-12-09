@@ -126,4 +126,15 @@ const deleteCategory = async (req, res) => {
   }
 };
 
-export { createCategory, getCategories, updateCategory, deleteCategory, getCategoryById };
+const getCategoryByUserId = async (req, res) => {
+  const userId = req.user;
+
+  try {
+    const userCategories = await Category.find({ _id: userId});
+    res.status(200).json({ success: true, message: "Categories fetched successfully", categories: userCategories });
+  } catch (error) {
+    res.status(400).json({ message: error.message, success: false });
+  }
+};
+
+export { createCategory, getCategories, updateCategory, deleteCategory, getCategoryById, getCategoryByUserId };
