@@ -18,38 +18,33 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
-import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
-import PriorityHighOutlinedIcon from '@mui/icons-material/PriorityHighOutlined';
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
+import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
+import PriorityHighOutlinedIcon from "@mui/icons-material/PriorityHighOutlined";
 
 // Screens
-// import Profile from "../Profile/Profile";
-import MyTasks from "../MyTasks/MyTasks"
+import MyTasks from "../MyTasks/MyTasks";
 import TaskCategories from "../TaskCategories/TaskCategories";
-import VitalTasks from "../VitalTasks/VitalTasks";
 
 const drawerWidth = 240;
 
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
+const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(({ theme, open }) => ({
+  flexGrow: 1,
+  padding: theme.spacing(3),
+  transition: theme.transitions.create("margin", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  marginLeft: `-${drawerWidth}px`,
+  ...(open && {
     transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
     }),
-    marginLeft: `-${drawerWidth}px`,
-    ...(open && {
-      transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    }),
-  })
-);
+    marginLeft: 0,
+  }),
+}));
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -92,18 +87,14 @@ export default function Dashboard() {
 
   const menuItems = [
     { text: "My Tasks", icon: <AssignmentTurnedInOutlinedIcon />, path: "/dashboard" },
-    { text: "Vital Tasks", icon: <PriorityHighOutlinedIcon />, path: "/dashboard/vital-tasks" },
     { text: "Task Categories", icon: <FormatListBulletedOutlinedIcon />, path: "/dashboard/task-categories" },
-    // { text: "Profile", icon: <AccountCircleOutlinedIcon />, path: "/dashboard/profile" },
     { text: "Logout", icon: <LogoutOutlinedIcon />, path: "/" },
   ];
 
-  // Simulate loading effect
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2000); // 2-second delay
-
+    }, 2000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -156,19 +147,22 @@ export default function Dashboard() {
         open={open}
       >
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
+          <IconButton onClick={handleDrawerClose}>{theme.direction === "ltr" ? <ChevronLeftIcon /> : <ChevronRightIcon />}</IconButton>
         </DrawerHeader>
         <Divider />
         <List>
           {menuItems.map((item) => (
             <ListItem key={item.text} disablePadding>
-              <ListItemButton onClick={() => navigate(item.path)}>
+              <ListItemButton
+                onClick={
+                  item.text === "Logout"
+                    ? () => {
+                        localStorage.removeItem("token");
+                        navigate("/");
+                      }
+                    : () => navigate(item.path)
+                }
+              >
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.text} />
               </ListItemButton>
@@ -180,19 +174,8 @@ export default function Dashboard() {
       <Main open={open}>
         <DrawerHeader />
         <Routes>
-          <Route
-            path="/"
-            element={<MyTasks />}
-          />
-          <Route path="vital-tasks" element={<VitalTasks /> } />
-          <Route
-            path="task-categories"
-            element={<TaskCategories />}
-          />
-          {/* <Route
-            path="profile"
-            element={<Profile />}
-          /> */}
+          <Route path="/" element={<MyTasks />} />
+          <Route path="task-categories" element={<TaskCategories />} />
           <Route path="*" element={<Typography>Page not found</Typography>} />
         </Routes>
       </Main>
