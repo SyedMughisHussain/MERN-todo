@@ -1,6 +1,7 @@
 import Category from "../models/category.model.js";
 
 const createCategory = async (req, res) => {
+  const userId  = req.user;
   const { name } = req.body;
 
   try {
@@ -10,7 +11,7 @@ const createCategory = async (req, res) => {
       return res.status(400).json({ message: "Category already exists" });
     }
 
-    const category = await Category.create({ name });
+    const category = await Category.create({ name, userId });
 
     res.status(201).json({ error: false, message: "Category created successfully", success: true, category });
   } catch (error) {
@@ -25,8 +26,9 @@ const createCategory = async (req, res) => {
 };
 
 const getCategories = async (req, res) => {
+  const userId  = req.user;
   try {
-    const categories = await Category.find();
+    const categories = await Category.find({ userId });
     res.status(200).json({
       error: false,
       message: "Categories fetched successfully",
@@ -130,7 +132,7 @@ const getCategoryByUserId = async (req, res) => {
   const userId = req.user;
 
   try {
-    const userCategories = await Category.find({ _id: userId});
+    const userCategories = await Category.find({ _id: userId });
     res.status(200).json({ success: true, message: "Categories fetched successfully", categories: userCategories });
   } catch (error) {
     res.status(400).json({ message: error.message, success: false });
