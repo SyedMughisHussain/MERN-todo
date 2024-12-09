@@ -25,7 +25,7 @@ import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBullet
 import PriorityHighOutlinedIcon from '@mui/icons-material/PriorityHighOutlined';
 
 // Screens
-import Profile from "../Profile/Profile";
+// import Profile from "../Profile/Profile";
 import MyTasks from "../MyTasks/MyTasks"
 import TaskCategories from "../TaskCategories/TaskCategories";
 import VitalTasks from "../VitalTasks/VitalTasks";
@@ -94,7 +94,7 @@ export default function Dashboard() {
     { text: "My Tasks", icon: <AssignmentTurnedInOutlinedIcon />, path: "/dashboard" },
     { text: "Vital Tasks", icon: <PriorityHighOutlinedIcon />, path: "/dashboard/vital-tasks" },
     { text: "Task Categories", icon: <FormatListBulletedOutlinedIcon />, path: "/dashboard/task-categories" },
-    { text: "Profile", icon: <AccountCircleOutlinedIcon />, path: "/dashboard/profile" },
+    // { text: "Profile", icon: <AccountCircleOutlinedIcon />, path: "/dashboard/profile" },
     { text: "Logout", icon: <LogoutOutlinedIcon />, path: "/" },
   ];
 
@@ -189,10 +189,10 @@ export default function Dashboard() {
             path="task-categories"
             element={<TaskCategories />}
           />
-          <Route
+          {/* <Route
             path="profile"
             element={<Profile />}
-          />
+          /> */}
           <Route path="*" element={<Typography>Page not found</Typography>} />
         </Routes>
       </Main>
