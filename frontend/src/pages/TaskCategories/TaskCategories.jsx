@@ -72,6 +72,30 @@ export default function TaskCategories() {
   };
 
   const handleEdit = () => {
+    axios
+      .put(
+        `http://localhost:3000/api/v1/category/updateCategory/${selectedCategory._id}`,
+        {
+          name: categoryName,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        // Update the category in the local state by comparing _id
+        setCategories(
+          categories.map((cat) =>
+            cat._id === selectedCategory._id ? { ...cat, name: categoryName } : cat
+          )
+        );
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
     handleClose();
   };
 
@@ -80,7 +104,7 @@ export default function TaskCategories() {
       .delete(`http://localhost:3000/api/v1/category/deleteCategory/${id}`)
       .then((response) => {
         console.log(response.data);
-        setCategories(categories.filter((category) => category._id!== id));        
+        setCategories(categories.filter((category) => category._id !== id));
       })
       .catch((error) => {
         console.log("Error: " + error.message);
@@ -105,7 +129,7 @@ export default function TaskCategories() {
           console.log("Error:", error);
         })
         .finally(() => setLoading(false));
-    }, 2000);
+    }, 1000);
   }, []);
 
   if (loading) {
