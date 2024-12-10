@@ -84,7 +84,7 @@ const deleteTodo = async (req, res) => {
 };
 
 const getTodos = async (req, res) => {
-  const { userId } = req.user;
+  const userId  = req.user;
   try {
     const todos = await Todo.find({ userId });
 

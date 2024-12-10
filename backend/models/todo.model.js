@@ -20,12 +20,12 @@ const todoSchema = new Schema(
     priority: {
       type: String,
       default: "Moderate",
-      enum: ["Low", "Moderate", "Low"],
+      enum: ["Low", "Moderate", "High"],
     },
     category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
+      type: String,
       required: true,
+      minlength: [3, "Category name must be at least 3 characters long"],
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,

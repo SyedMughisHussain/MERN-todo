@@ -7,8 +7,8 @@ const router = express.Router();
 
 router.route("/createTodo").post(verifyToken, createTodo);
 router.route("/getTodos").get(verifyToken, getTodos);
-router.route("/deleteTodo/:id").delete(verifyToken, deleteTodo);
-router.route("/getTodoById/:id").get(verifyToken, getTodoById);
-router.route("/updateTodoById/:id").put(verifyToken, updateTodoById);
+router.route("/deleteTodo/:id").delete(deleteTodo);
+router.route("/getTodoById/:id").get(getTodoById);
+router.route("/updateTodoById/:id").put(updateTodoById);
 
 export default router;
