@@ -5,12 +5,6 @@ const createCategory = async (req, res) => {
   const { name } = req.body;
 
   try {
-    const existingCategory = await Category.findOne({ name });
-
-    if (existingCategory) {
-      return res.status(400).json({ message: "Category already exists" });
-    }
-
     const category = await Category.create({ name, userId });
 
     res.status(201).json({ error: false, message: "Category created successfully", success: true, category });
