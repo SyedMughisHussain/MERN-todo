@@ -115,7 +115,7 @@ export default function SignUp(props) {
       });
 
       axios
-        .post("http://localhost:3000/api/v1/user/signup", {
+        .post("https://mern-todo-steel.vercel.app/api/v1/user/signup", {
           fullName: data.get("fullName"),
           email: data.get("email"),
           password: data.get("password"),

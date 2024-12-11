@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -51,7 +51,7 @@ export default function TaskCategories() {
   const handleCreate = () => {
     axios
       .post(
-        "http://localhost:3000/api/v1/category/createCategory",
+        "https://mern-todo-steel.vercel.app/api/v1/category/createCategory",
         {
           name: categoryName,
         },
@@ -74,7 +74,7 @@ export default function TaskCategories() {
   const handleEdit = () => {
     axios
       .put(
-        `http://localhost:3000/api/v1/category/updateCategory/${selectedCategory._id}`,
+        `https://mern-todo-steel.vercel.app/api/v1/category/updateCategory/${selectedCategory._id}`,
         {
           name: categoryName,
         },
@@ -101,7 +101,7 @@ export default function TaskCategories() {
 
   const deleteTodo = (id) => {
     axios
-      .delete(`http://localhost:3000/api/v1/category/deleteCategory/${id}`)
+      .delete(`https://mern-todo-steel.vercel.app/api/v1/category/deleteCategory/${id}`)
       .then((response) => {
         console.log(response.data);
         setCategories(categories.filter((category) => category._id !== id));
@@ -116,7 +116,7 @@ export default function TaskCategories() {
     setLoading(true);
     setTimeout(() => {
       axios
-        .get("http://localhost:3000/api/v1/category/getCategories", {
+        .get("https://mern-todo-steel.vercel.app/api/v1/category/getCategories", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

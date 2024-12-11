@@ -29,9 +29,11 @@ const Card = styled(MuiCard)(({ theme }) => ({
   [theme.breakpoints.up("sm")]: {
     maxWidth: "450px",
   },
-  boxShadow: "hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px",
+  boxShadow:
+    "hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px",
   ...theme.applyStyles("dark", {
-    boxShadow: "hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px",
+    boxShadow:
+      "hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px",
   }),
 }));
 
@@ -48,10 +50,12 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
     position: "absolute",
     zIndex: -1,
     inset: 0,
-    backgroundImage: "radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))",
+    backgroundImage:
+      "radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))",
     backgroundRepeat: "no-repeat",
     ...theme.applyStyles("dark", {
-      backgroundImage: "radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))",
+      backgroundImage:
+        "radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))",
     }),
   },
 }));
@@ -116,7 +120,7 @@ export default function SignIn(props) {
       setLoading(true);
 
       axios
-        .post("http://localhost:3000/api/v1/user/signin", {
+        .post("https://mern-todo-steel.vercel.app/api/v1/user/signin", {
           email: data.get("email"),
           password: data.get("password"),
         })
@@ -126,7 +130,7 @@ export default function SignIn(props) {
           navigate("/dashboard");
           console.log(response.data);
         })
-        .catch(() => {
+        .catch((error) => {
           console.log("Error:", error);
         })
         .finally(() => {
@@ -139,9 +143,15 @@ export default function SignIn(props) {
     <AppTheme {...props}>
       <CssBaseline enableColorScheme />
       <SignInContainer direction="column" justifyContent="space-between">
-        <ColorModeSelect sx={{ position: "fixed", top: "1rem", right: "1rem" }} />
+        <ColorModeSelect
+          sx={{ position: "fixed", top: "1rem", right: "1rem" }}
+        />
         <Card variant="outlined">
-          <Typography component="h1" variant="h4" sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}>
+          <Typography
+            component="h1"
+            variant="h4"
+            sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}
+          >
             Sign in
           </Typography>
           <Box
@@ -190,10 +200,21 @@ export default function SignIn(props) {
               />
             </FormControl>
             <ForgotPassword open={open} handleClose={handleClose} />
-            <Button type="submit" fullWidth variant="contained" disabled={loading}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              disabled={loading}
+            >
               {loading ? <CircularProgress size={24} /> : "Sign in"}
             </Button>
-            <Link component="button" type="button" onClick={handleClickOpen} variant="body2" sx={{ alignSelf: "center" }}>
+            <Link
+              component="button"
+              type="button"
+              onClick={handleClickOpen}
+              variant="body2"
+              sx={{ alignSelf: "center" }}
+            >
               Forgot your password?
             </Link>
           </Box>

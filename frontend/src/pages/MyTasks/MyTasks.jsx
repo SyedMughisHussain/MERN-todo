@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import {
   Container,
@@ -42,7 +42,7 @@ const MyTasks = () => {
     if (editIndex !== null) {
       const taskId = tasks[editIndex]._id;
       axios
-        .put(`http://localhost:3000/api/v1/todo/updateTodoById/${taskId}`, {
+        .put(`https://mern-todo-steel.vercel.app/api/v1/todo/updateTodoById/${taskId}`, {
           title: form.title,
           description: form.description,
           status: form.status,
@@ -61,7 +61,7 @@ const MyTasks = () => {
     } else {
       axios
         .post(
-          "http://localhost:3000/api/v1/todo/createTodo",
+          "https://mern-todo-steel.vercel.app/api/v1/todo/createTodo",
           {
             title: form.title,
             description: form.description,
@@ -95,7 +95,7 @@ const MyTasks = () => {
 
   const handleDeleteTask = (index, id) => {
     axios
-      .delete(`http://localhost:3000/api/v1/todo/deleteTodo/${id}`)
+      .delete(`https://mern-todo-steel.vercel.app/api/v1/todo/deleteTodo/${id}`)
       .then((response) => {
         console.log(response.data);
         const updatedTasks = tasks.filter((_, i) => i !== index);
@@ -108,7 +108,7 @@ const MyTasks = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/v1/todo/getTodos", {
+      .get("https://mern-todo-steel.vercel.app/api/v1/todo/getTodos", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -122,7 +122,7 @@ const MyTasks = () => {
       });
 
     axios
-      .get("http://localhost:3000/api/v1/category/getCategories", {
+      .get("https://mern-todo-steel.vercel.app/api/v1/category/getCategories", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
