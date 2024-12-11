@@ -77,10 +77,6 @@ export default function Dashboard() {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = useState(true); // State for loading
 
-  if (!localStorage.getItem("token")) {
-    navigate("/");
-  }
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
