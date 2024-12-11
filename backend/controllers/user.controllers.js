@@ -72,7 +72,9 @@ const signin = async (req, res) => {
       });
     }
 
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
+    const token = jwt.sign({ _id: user._id }, "todoapp", {
+      expiresIn: "1d",
+    });
 
     res.json({
       error: false,
@@ -97,7 +99,7 @@ const getLoggedInUser = async (req, res) => {
   try {
     const loggedInUser = req.user;
     console.log(loggedInUser);
-  
+
     if (!loggedInUser) {
       return res.status(401).json({ message: "User not authenticated" });
     }
