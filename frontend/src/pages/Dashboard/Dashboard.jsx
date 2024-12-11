@@ -92,6 +92,9 @@ export default function Dashboard() {
   ];
 
   useEffect(() => {
+    if(!localStorage.getItem("token")){
+      navigate("/")
+    }
     const timer = setTimeout(() => {
       setLoading(false);
     }, 2000);
