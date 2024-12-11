@@ -21,7 +21,7 @@ const App = () => {
     <Routes>
       <Route path="/" element={<SignIn />} />
       <Route path="sign-up" element={<SignUp />} />
-      <Route path="dashboard/*" element={<Dashboard />} />
+      <Route path="dashboard/*" element={localStorage.getItem("token") ? <Dashboard /> : <SignIn />} />
     </Routes>
   );
 };
