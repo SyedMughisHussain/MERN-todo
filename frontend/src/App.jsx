@@ -8,22 +8,22 @@ import ProtectedRoute from "./components/ProtectedRoutes.jsx";
 const App = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
 
-    if (token) {
-      navigate("/dashboard");
-    } else {
-      navigate("/");
-    }
-  }, []);
+  //   if (token) {
+  //     navigate("/dashboard");
+  //   } else {
+  //     navigate("/");
+  //   }
+  // }, []);
 
   return (
     <Routes>
       <Route path="/" element={<SignIn />} />
       <Route path="sign-up" element={<SignUp />} />
       <Route
-        path="dashboard/*"
+        path="/dashboard"
         element={
           <ProtectedRoute>
             <Dashboard />
