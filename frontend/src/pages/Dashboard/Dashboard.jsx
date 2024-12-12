@@ -176,7 +176,6 @@ export default function Dashboard() {
         <Routes>
           <Route path="/" element={<MyTasks />} />
           <Route path="task-categories" element={<TaskCategories />} />
-          <Route path="*" element={<Typography>Page not found</Typography>} />
         </Routes>
       </Main>
     </Box>
